@@ -11,30 +11,32 @@ namespace SmartpostShippingPhp\Shipment\Destination;
  *     fill  and “”.
  */
 
-class ParcelTerminal {
+class ParcelTerminal
+{
+    private array $destinationData;
+    private bool $parcelShop;
 
-  private array $destinationData;
-  private bool $parcelShop;
+    public function __construct(array $destinationData, bool $parcelShop = true)
+    {
+        $this->destinationData = $destinationData;
+        $this->parcelShop = $parcelShop;
+    }
 
-  public function __construct(array $destinationData, bool $parcelShop = true){
-    $this->destinationData = $destinationData;
-    $this->parcelShop = $parcelShop;
-  }
-
-  /**
-   * Generate XML for destination part
-   *
-   * @return string
-   */
-  public function getXml(): string{
-    if ($this->parcelShop) {
-      return "
+    /**
+     * Generate XML for destination part
+     *
+     * @return string
+     */
+    public function getXml(): string
+    {
+        if ($this->parcelShop) {
+            return "
         <destination>
           <place_id>" . $this->destinationData['place_id'] . "</place_id>
         </destination>
       ";
-    } else {
-      return "
+        } else {
+            return "
         <destination>
           <street>" . $this->destinationData['street'] . "</street>
           <house>" . $this->destinationData['house'] . "</house>
@@ -46,8 +48,6 @@ class ParcelTerminal {
           <timewindow>" . $this->destinationData['time_window'] . "</timewindow>
         </destination>
       ";
+        }
     }
-  }
 }
-
-?>
